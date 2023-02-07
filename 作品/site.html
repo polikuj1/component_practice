@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新竹觀光景點</title>
+  <link rel="shortcut icon" href="img/1674963757.ico" type="image/x-icon">
+  <!-- <link rel="stylesheet" href="css/normalize.css"> -->
+  <link rel="stylesheet" href="css/site.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.3/axios.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.2/vue.global.js"></script>
+  <script src="https://kit.fontawesome.com/10662d5b44.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- <img src="https://storage.googleapis.com/smiletaiwan-cms-cwg-tw/article/202108/article-611390fd07307.jpg" alt=""> -->
+    <!-- 導覽列 -->
+    <nav-bar :status="site" @open="open" @close="close" :status1="food" @food="foodOpen" @food1="foodClose" @old="getSearch"> 
+    </nav-bar>
+    <!-- 景點一覽 -->
+    <div class="intro-container">
+      <div class="box" v-for="(item,index) in renderData">
+        <div class="pic">
+          <!-- 利用樣板字面值，使照片的最後一個數字可以隨機。因為字串+數字會自動將數字轉型為字串，再相加-->
+          <img :src=" `${url + Math.floor(Math.random()*100)}` " alt="照片">
+        </div>
+        <div class="txt">
+          <h4>{{item.景點名稱}}</h4>
+          <p>地址:{{item.地址}}</p>
+          <p>{{item.景點介紹}}</p>
+        </div>
+      </div>
+    </div>
+    <!--  -->
+    <div class="page-select">
+      <button type="button" @click="lastPage" :disabled="currentPage === 1" v-show="pageTotal === 8"><i class="fa-solid fa-arrow-left"></i></button>
+      <div v-show="pageTotal === 8">
+        <a href="#" v-for="page in pageTotal" @click.prevent="selectPage(page)" :class="{active:page === currentPage}">{{page}}</a>
+      </div>
+      <button type="button" @click="nextPage" :disabled="currentPage === perPage" v-show="pageTotal === 8"><i class="fa-solid fa-arrow-right"></i></button>
+    </div>
+
+    <div class="topButton"><a href="#app">&uarr;</a></div>
+  </div>
+
+
+<script src="js/site.js"></script>
+</body>
+</html>
